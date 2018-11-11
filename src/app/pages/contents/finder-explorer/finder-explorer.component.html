@@ -3,8 +3,10 @@
     <div *ngFor="let listItem of explorerSplitedListItems" class="col fix-height-100">
       <nb-list>
         <nb-list-item *ngFor="let item of listItem.items">
-          <button class="btn btn-dark btn-xs" (click)="selectedListItem(item)">{{ item.Name }}</button>
-
+          <button *ngIf="item.HasLinkSubCategoryFlag; else noneSubCategoryTemplate" class="btn btn-dark btn-xs" (click)="selectedListItem(item)">{{ item.Name }}</button>
+          <ng-template #noneSubCategoryTemplate>
+            {{item.Name}}
+          </ng-template>
           <button class="btn btn-dark btn-xs" (click)="selectedListItemDisplayContent(item)">Show</button>
         </nb-list-item>
       </nb-list>
@@ -13,7 +15,7 @@
   <div class="row fix-height-50">
     <div class="col fix-height-100">
       <div class="d-flex flex-wrap">
-        <nb-card *ngFor="let article of viewModel.ContentListPageItem; let i = index">
+        <nb-card *ngFor="let article of contentListPageItem; let i = index">
           <nb-card-header (click)="showPreview(article, i)">{{article.Content.Name}}</nb-card-header>
           <nb-card-body>
             <img class="thumbnail" src="{{article.ThumbnailUrl}}" [alt]="article.Content.Name">

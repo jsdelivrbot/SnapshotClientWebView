@@ -6,6 +6,7 @@ import { FinderExplorerComponent } from './finder-explorer/finder-explorer.compo
 import { FinderCriteriaComponent } from './finder-criteria/finder-criteria.component';
 import { PreviewComponent } from './preview/preview.component';
 import { ContentsComponent } from './contents.component';
+import { ThemeModule } from 'src/app/@theme/themes.module';
 
 const COMPONENTS = [
   FinderExplorerComponent,
@@ -15,7 +16,7 @@ const COMPONENTS = [
 
 @NgModule({
   imports: [
-    CommonModule,
+    ThemeModule,
     ContentsRoutingModule
   ],
   declarations: [...COMPONENTS, ContentsComponent]

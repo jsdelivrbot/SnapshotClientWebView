@@ -45,6 +45,8 @@ const NB_MODULES = [
   NbCheckboxModule,
   NbPopoverModule,
   NbContextMenuModule,
+  NbProgressBarModule,
+  NbListModule,
   NgbModule,
   NbSecurityModule, // *nbIsGranted directive,
   NbProgressBarModule,

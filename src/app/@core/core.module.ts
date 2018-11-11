@@ -1,8 +1,9 @@
 import { Optional, SkipSelf, ModuleWithProviders, NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { ServiceModule } from "./service/service.module";
 
 export const NB_CORE_PROVIDERS = [
-//  ...ServiceModule.forRoot().providers,
+  ...ServiceModule.forRoot().providers,
 //  HttpClientService,
 ];
 
