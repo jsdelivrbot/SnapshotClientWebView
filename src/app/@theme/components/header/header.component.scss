@@ -1,0 +1,13 @@
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  .app-header-container {
+    display: flex;
+    align-items: center;
+    width: auto;
+  }
+}

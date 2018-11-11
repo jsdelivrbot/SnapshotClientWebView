@@ -1,0 +1,18 @@
+<nb-layout>
+  <nb-layout-header fixed>
+    <app-header></app-header>
+  </nb-layout-header>
+  <nb-sidebar class="menu-sidebar" tag="menu-sidebar" responsive>
+    <ng-content select="nb-menu"></ng-content>
+  </nb-sidebar>
+  <nb-layout-column>
+    <ng-content select="router-outlet"></ng-content>
+  </nb-layout-column>
+  <!--
+  <nb-layout-column *ngIf="viewmodel.pain != null" class="infopain-column">
+
+    <ng-container *ngTemplateOutlet="viewmodel.pain"></ng-container>
+  </nb-layout-column>
+-->
+  <nb-layout-footer fixed>Contact us</nb-layout-footer>
+</nb-layout>

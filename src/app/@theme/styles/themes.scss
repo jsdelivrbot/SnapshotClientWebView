@@ -1,0 +1,19 @@
+@import '~@nebular/theme/styles/theming';
+@import '~@nebular/theme/styles/themes';
+
+$nb-enabled-themes: (default, snapshot);
+
+$nb-themes: nb-register-theme((
+  header-height: 2.5rem,
+  header-padding: 0.5rem,
+  footer-height: 1.5rem,
+  footer-padding: 0.5rem,
+
+  // Card
+  card-header-font-size: 1rem,
+  card-header-font-weight: 400,
+  card-padding: 0.5rem,
+
+  // Layout
+  layout-padding: 0.5rem 0.5rem 0.2rem,
+), snapshot, default);

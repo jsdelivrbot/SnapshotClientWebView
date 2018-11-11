@@ -1,0 +1,16 @@
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  // レイアウトコンポーネントで使用するカラム部分の設定
+  nb-layout-column {
+    $ha: nb-theme(header-height);
+    $hb: nb-theme(footer-height);
+
+    height: calc(100vh - #{$ha} - #{$hb} + 1rem);
+    overflow: auto;
+  }
+
+  nb-layout-column.infopain-column {
+    flex: 0 0 10rem !important;
+  }
+}
