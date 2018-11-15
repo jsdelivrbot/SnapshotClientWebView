@@ -16,7 +16,7 @@
     <div class="col fix-height-100">
       <div class="d-flex flex-wrap">
         <nb-card *ngFor="let article of contentListPageItem; let i = index">
-          <nb-card-header (click)="showPreview(article, i)">{{article.Content.Name}}</nb-card-header>
+          <nb-card-header (click)="showPreview(article, i + 1)">{{article.Content.Name}}</nb-card-header>
           <nb-card-body>
             <img class="thumbnail" src="{{article.ThumbnailUrl}}" [alt]="article.Content.Name">
           </nb-card-body>

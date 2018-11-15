@@ -11,7 +11,7 @@ const routes: Routes = [
     children: [
       { path: 'explorer', component: FinderExplorerComponent },
       { path: 'criteria', component: FinderCriteriaComponent },
-      { path: 'preview', component: PreviewComponent },
+      { path: 'preview/:categoryId/:position', component: PreviewComponent },
     ]
   }
 ];

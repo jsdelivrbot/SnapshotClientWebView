@@ -8,11 +8,8 @@
   <nb-layout-column>
     <ng-content select="router-outlet"></ng-content>
   </nb-layout-column>
-  <!--
-  <nb-layout-column *ngIf="viewmodel.pain != null" class="infopain-column">
-
-    <ng-container *ngTemplateOutlet="viewmodel.pain"></ng-container>
+  <nb-layout-column *ngIf="viewmodel.screenStatus.pain != null" class="infopain-column">
+    <ng-container *ngTemplateOutlet="viewmodel.screenStatus.pain"></ng-container>
   </nb-layout-column>
--->
   <nb-layout-footer fixed>Contact us</nb-layout-footer>
 </nb-layout>

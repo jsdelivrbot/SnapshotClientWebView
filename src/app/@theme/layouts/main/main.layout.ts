@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { ViewModelService } from "src/app/@core/service/view-model.service";
 
 @Component({
   selector: 'app-main-layout',
@@ -7,6 +8,7 @@ import { Component } from "@angular/core";
 })
 export class MainLayoutComponent {
   constructor(
+    public viewmodel: ViewModelService,
   ) {
 
   }

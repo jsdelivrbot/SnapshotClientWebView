@@ -1,0 +1,30 @@
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  nb-card {
+    margin: 0.3rem;
+  }
+
+  .nb-list-item {
+    padding: 0;
+
+    .nb-list-item-button {
+      width: 100%;
+      border: none;
+      text-align: left;
+    }
+
+    .nb-list-item-button-last {
+      max-width:4rem;
+
+      border-right: none;
+      border-top: none;
+      border-bottom: none;
+      border-left: 1px solid #dfdfdf;
+    }
+  }
+
+  .thumbnail {
+    max-width: 100px;
+  }
+}

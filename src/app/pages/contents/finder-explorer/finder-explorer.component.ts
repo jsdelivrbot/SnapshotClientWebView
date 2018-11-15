@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Category, Content } from 'src/app/@core/data';
 import { DeliveryService } from 'src/app/@core/service/delivery.service';
 import { take } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { PreviewComponent } from '../preview/preview.component';
 
 @Component({
   selector: 'app-finder-explorer',
@@ -22,8 +24,18 @@ export class FinderExplorerComponent implements OnInit {
    */
   contentListPageItem: ContentListPageItem[] = [];
 
+  /** 選択中のカテゴリID */
+  selectedCategoryId:number;
+
+  /**
+   * コンストラクタ
+   *
+   * @param delivery
+   * @param router
+   */
   constructor(
     private delivery: DeliveryService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -43,6 +55,7 @@ export class FinderExplorerComponent implements OnInit {
    * @param item
    */
   selectedListItemDisplayContent(item: Category) {
+    this.selectedCategoryId = item.Id;
     this.loadContentListByCategory(item.Id);
   }
 
@@ -50,6 +63,7 @@ export class FinderExplorerComponent implements OnInit {
    * プレビュー画面を表示します
    */
   showPreview(item: ContentListPageItem, position: number) {
+    this.router.navigate([...PreviewComponent.PATH, this.selectedCategoryId, position]);
   }
 
   private loadContentListByCategory(categoryId: number) {
