@@ -2,10 +2,17 @@
   <div class="row fix-height-50">
     <div *ngFor="let listItem of criteriaSplitedListItems" class="col fix-height-100">
       <nb-list class="list-group">
-        <nb-list-item>{{listItem.selectedLabelId}}</nb-list-item>
+        <nb-list-item>
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="絞り込み" [(ngModel)]="listItem.filterLabelListString">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary btn-xs btn-icon" type="button" (click)="refineLabelList(listItem)">S</button>
+            </div>
+          </div>
+        </nb-list-item>
         <nb-list-item *ngFor="let item of listItem.labelItems;let i = index" class="nb-list-item list-group-item btn-group d-flex justify-content-between">
           <button class="nb-list-item-button btn btn-xs btn-outline-primary" [class.active]="item.isActive" (click)="selectedListItem(listItem, item)">
-            {{item.label.Name}}</button>
+            {{item.label.name}}</button>
         </nb-list-item>
       </nb-list>
     </div>
@@ -18,9 +25,9 @@
           <div class="col p-0 fix-height-100">
             <div class="d-flex flex-column">
               <nb-card *ngFor="let article of categoryListPageItem; let i = index">
-                <nb-card-header (click)="selectCategoryListItem(article)">{{article.category.Name}}</nb-card-header>
+                <nb-card-header (click)="selectCategoryListItem(article)">{{article.category.name}}</nb-card-header>
                 <nb-card-body>
-                  <img class="thumbnail" src="{{article.ThumbnailUrl}}" [alt]="">
+                  <img class="thumbnail" src="{{article.thumbnailUrl}}" [alt]="">
                 </nb-card-body>
               </nb-card>
             </div>
@@ -28,9 +35,9 @@
           <div class="col p-0">
             <div class="d-flex flex-wrap">
               <nb-card *ngFor="let article of contentListPageItem; let i = index">
-                <nb-card-header (click)="showPreview(article, i + 1)">{{article.Content.Name}}</nb-card-header>
+                <nb-card-header (click)="showPreview(article, i + 1)">{{article.content.name}}</nb-card-header>
                 <nb-card-body>
-                  <img class="thumbnail" src="{{article.ThumbnailUrl}}" [alt]="article.Content.Name">
+                  <img class="thumbnail" src="{{article.thumbnailUrl}}" [alt]="article.content.name">
                 </nb-card-body>
               </nb-card>
             </div>

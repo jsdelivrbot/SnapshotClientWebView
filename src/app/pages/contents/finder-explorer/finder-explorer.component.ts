@@ -3,7 +3,6 @@ import { Category, Content } from 'src/app/@core/data';
 import { DeliveryService } from 'src/app/@core/service/delivery.service';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { PreviewComponent } from '../preview/preview.component';
 
 @Component({
   selector: 'app-finder-explorer',
@@ -25,7 +24,7 @@ export class FinderExplorerComponent implements OnInit {
   contentListPageItem: ContentListPageItem[] = [];
 
   /** 選択中のカテゴリID */
-  selectedCategoryId:number;
+  selectedCategoryId: number;
 
   /**
    * コンストラクタ
@@ -39,7 +38,7 @@ export class FinderExplorerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadCategoryChildren(0);
+    this.loadCategoryChildren(1);
   }
 
   /**
@@ -47,7 +46,7 @@ export class FinderExplorerComponent implements OnInit {
    * @param item
    */
   selectedListItem(item: Category) {
-    this.loadCategoryChildren(item.Id);
+    this.loadCategoryChildren(item.id);
   }
 
   /**
@@ -55,15 +54,15 @@ export class FinderExplorerComponent implements OnInit {
    * @param item
    */
   selectedListItemDisplayContent(item: Category) {
-    this.selectedCategoryId = item.Id;
-    this.loadContentListByCategory(item.Id);
+    this.selectedCategoryId = item.id;
+    this.loadContentListByCategory(item.id);
   }
 
   /**
    * プレビュー画面を表示します
    */
   showPreview(item: ContentListPageItem, position: number) {
-    this.router.navigate([...PreviewComponent.PATH, this.selectedCategoryId, position]);
+    this.router.navigate(['pages', 'contents', 'preview', this.selectedCategoryId, position]);
   }
 
   private loadContentListByCategory(categoryId: number) {
@@ -72,8 +71,8 @@ export class FinderExplorerComponent implements OnInit {
       .subscribe((result) => {
         result.forEach((inprop) => {
           let item: ContentListPageItem = {
-            Content: inprop,
-            ThumbnailUrl: inprop.ThumbnailImageSrcUrl,
+            content: inprop,
+            thumbnailUrl: inprop.thumbnailImageSrcUrl,
           };
           this.contentListPageItem.push(item);
         });
@@ -89,7 +88,7 @@ export class FinderExplorerComponent implements OnInit {
         let targetItems: ExplorerSplitCategoryListItem[] = this.explorerSplitedListItems;
 
         let index = this.explorerSplitedListItems.findIndex((prop) => {
-          if (prop.items != null && prop.items.findIndex((prop2: Category) => prop2.Id === categoryId) > -1) return true;
+          if (prop.items != null && prop.items.findIndex((prop2: Category) => prop2.id === categoryId) > -1) return true;
           return false;
         });
 
@@ -143,6 +142,6 @@ export interface ExplorerSplitCategoryListItem {
  * コンテント一覧の項目クラス
  */
 export interface ContentListPageItem {
-  ThumbnailUrl: string;
-  Content: Content;
+  thumbnailUrl: string;
+  content: Content;
 }

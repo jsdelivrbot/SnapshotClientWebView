@@ -12,6 +12,15 @@ export class HttpClientService {
   ) {
   }
 
+  action(api: string, body: string = null, query: HttpParams = null): Observable<any> {
+    let url = environment.server;
+    return this.http.put<SnapshotApiResponse>(url + api, body, {
+      params: query
+    }).pipe(
+      map(response => response.value)
+    );
+  }
+
   send(api: string, query: HttpParams = null): Observable<any> {
     let url = environment.server;
     return this.http.get<SnapshotApiResponse>(url + api, {

@@ -4,8 +4,11 @@ import { Label } from "./label";
  *
  */
 export interface Category {
-  Id: number;
-  Name: string;
-  HasLinkSubCategoryFlag: boolean;
-  Labels: Array<Label>;
+  id: number;
+  name: string;
+  hasLinkSubCategoryFlag: boolean;
+  labels: Array<Label>;
+  artworkThumbnailKey: string;
+  albumFlag: boolean;
+  thumbnailImageSrcUrl: string;
 }

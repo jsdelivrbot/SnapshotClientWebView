@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, TemplateRef, OnDestroy } from '@angular/core';
 import { DeliveryService } from 'src/app/@core/service/delivery.service';
 import { Content, Label } from 'src/app/@core/data';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -11,10 +11,7 @@ import { take } from 'rxjs/operators';
   templateUrl: './preview.component.html',
   styleUrls: ['./preview.component.scss']
 })
-export class PreviewComponent implements OnInit, AfterViewInit {
-
-  /** ルーティングパス */
-  static readonly PATH = ['pages', 'contents', 'preview'];
+export class PreviewComponent implements OnInit, OnDestroy {
 
   /**  */
   previewContent: Content | null = null;
@@ -63,12 +60,11 @@ export class PreviewComponent implements OnInit, AfterViewInit {
       this.currentPageNo = position;
 
       this.delivery.loadCategoryContentsPreview(categoryId, position).pipe(take(1)).subscribe((content) => {
-        console.log("Response", content);
         this.previewContent = content;
-        this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(content.ThumbnailImageSrcUrl);
+        this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(content.previewFileUrl);
 
         this.delivery.loadCategory(categoryId).pipe(take(1)).subscribe((category) => {
-          this.previewCategoryLabels = category.Labels;
+          this.previewCategoryLabels = category.labels;
         });
         this.delivery.loadCategoryContentsTotal(categoryId).pipe(take(1)).subscribe((pagenation) => {
           this.totalPageNo = pagenation.total;
@@ -77,8 +73,8 @@ export class PreviewComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
-
+  ngOnDestroy() {
+    this.viewmodel.screenStatus.pain = null;
   }
 
   /**
@@ -97,12 +93,20 @@ export class PreviewComponent implements OnInit, AfterViewInit {
     this.navigation(this.currentPageNo - 1);
   }
 
+  /**
+   * ラベル検索を表示します
+   *
+   * @param label ラベル
+   */
+  showCriteria(label: Label) {
+    this.router.navigate(['pages', 'contents', 'criteria', label.id]);
+  }
 
   /**
    *
    * @param page
    */
   private navigation(page: number) {
-    this.router.navigate([...PreviewComponent.PATH, this.currentCategoryId, page]);
+    this.router.navigate(['pages', 'contents', 'preview', this.currentCategoryId, page]);
   }
 }

@@ -2,7 +2,7 @@
  *
  */
 export interface Label {
-  Id: number;
-  Name: string;
-  HasLinkSubLabelFlag: boolean;
+  id: number;
+  name: string;
+  hasLinkSubLabelFlag: boolean;
 }

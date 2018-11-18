@@ -20,7 +20,7 @@ export class DeliveryService {
    * @param categoryId
    */
   loadCategory(categoryId: number): Observable<Category> {
-    return this.http.send('/api/category/' + categoryId, null);
+    return this.http.send('/api/bff/category/' + categoryId, null);
   }
 
   /**
@@ -29,7 +29,7 @@ export class DeliveryService {
    * @param parentCategoryId カテゴリID
    */
   loadCategoryTree(parentCategoryId: number): Observable<Category[]> {
-    return this.http.send('/api/category/tree/' + parentCategoryId, null);
+    return this.http.send('/api/bff/category/tree/' + parentCategoryId, null);
   }
 
   /**
@@ -38,7 +38,7 @@ export class DeliveryService {
    * @param categoryId カテゴリID
    */
   loadCategoryContents(categoryId: number): Observable<Content[]> {
-    return this.http.send('/api/category/' + categoryId + '/contents', null);
+    return this.http.send('/api/bff/category/' + categoryId + '/contents', null);
   }
 
   /**
@@ -47,7 +47,7 @@ export class DeliveryService {
    * @param categoryId カテゴリID
    */
   loadCategoryContentsTotal(categoryId: number): Observable<PagenationEntity> {
-    let url = '/api/category/' + categoryId + '/contents/total';
+    let url = '/api/bff/category/' + categoryId + '/contents/total';
     return this.http.send(url, null)
       .pipe(
         map((res) => {
@@ -67,28 +67,48 @@ export class DeliveryService {
    * @param position 表示する項目のカテゴリ内での位置
    */
   loadCategoryContentsPreview(categoryId: number, position: number): Observable<Content> {
-    let url = '/api/category/' + categoryId + '/contents/preview/' + position;
+    let url = '/api/bff/category/' + categoryId + '/contents/preview/' + position;
     return this.http.send(url, null);
   }
 
   /**
+   * すべてのラベルを取得します
    *
+   * このAPIはページング対応とするためシグニチャ変更予定です。
    */
   loadLabels(): Observable<Label[]> {
-    return this.http.send('/api/labels', null);
+    return this.http.send('/api/bff/labels', null);
   }
 
   /**
-   *
-   * @param label
+   * ラベルを条件にカテゴリリストを取得します。
+   * @param label 条件とするラベル配列
    */
   findCategoryByLabel(label: Label[]): Observable<Category[]> {
+    // このAPIでは、ラベルは複数指定可能とする。
     let labelIdList: number[] = [];
-    label.forEach(prop => labelIdList.push(prop.Id));
+    label.forEach(prop => labelIdList.push(prop.id));
 
-    let url = '/api/categories/' + labelIdList.join(',');
-    console.log("リクエスト", url);
+    let url = '/api/bff/categories/' + labelIdList.join(',');
 
     return this.http.send(url, null);
+  }
+
+  /**
+   * コンテントを既読状態にします。
+   *
+   * @param content_id コンテントID
+   */
+  readabled(content_id: number): Observable<boolean> {
+    return this.http.action('/api/bff/content/' + content_id + '/readable', null);
+  }
+
+  /**
+   * カテゴリのアートワークを設定します
+   *
+   * @param category_id カテゴリID
+   */
+  updateArtwork(category_id: number): Observable<Category> {
+    return this.http.action('/api/bff/category/' + category_id + '/thumbnail', null);
   }
 }

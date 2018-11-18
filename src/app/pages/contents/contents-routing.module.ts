@@ -11,6 +11,7 @@ const routes: Routes = [
     children: [
       { path: 'explorer', component: FinderExplorerComponent },
       { path: 'criteria', component: FinderCriteriaComponent },
+      { path: 'criteria/:cond_labels', component: FinderCriteriaComponent },
       { path: 'preview/:categoryId/:position', component: PreviewComponent },
     ]
   }
@@ -20,4 +21,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ContentsRoutingModule { }
+export class ContentsRoutingModule {
+
+}

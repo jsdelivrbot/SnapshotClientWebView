@@ -30,10 +30,5 @@ export class PagesComponent {
       link: '/pages/contents/preview',
       home: true,
     },
-    {
-      title: 'IoT Dashboard',
-      icon: 'nb-home',
-      link: '/pages/iot-dashboard',
-    },
   ];
 }

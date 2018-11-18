@@ -5,14 +5,14 @@
 <ng-template #pain>
   <div class="d-flex flex-column" style="height:100%;">
     <div #contentInfo>
-      <div>{{previewContent?.Name}}</div>
+      <div>{{previewContent?.name}}</div>
       <div>
-        表示回数:{{previewContent?.ReadableCount}}
+        表示回数:{{previewContent?.readableCount}}
       </div>
     </div>
     <div #categoryTagList>
-      <button *ngFor="let label of previewCategoryLabels" class="btn btn-dark btn-xs">
-        {{label.Id}} {{label.Name}}
+      <button *ngFor="let label of previewCategoryLabels" class="btn btn-dark btn-xs" (click)="showCriteria(label)">
+        {{label.id}} {{label.name}}
       </button>
     </div>
     <div #pagenation class="mt-auto">
