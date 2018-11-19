@@ -4,7 +4,8 @@ import { Content, Label } from 'src/app/@core/data';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 import { ViewModelService } from 'src/app/@core/service/view-model.service';
-import { take } from 'rxjs/operators';
+import { take, throttle } from 'rxjs/operators';
+import { fromEvent, interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-preview',
@@ -27,6 +28,8 @@ export class PreviewComponent implements OnInit, OnDestroy {
   currentPageNo: number = 0;
 
   totalPageNo: number = 0;
+
+  fitMode: boolean = false;
 
   /**
    * テンプレートから「#pain」でマークしているng-templateを取得する
@@ -71,10 +74,15 @@ export class PreviewComponent implements OnInit, OnDestroy {
         });
       });
     });
+
+    this.resizeObservableSubscription = this.resizeObservable.subscribe(()=> this.refresh());
   }
+  private resizeObservable = fromEvent(window, 'resize').pipe(throttle(() => interval(200)));
+  private resizeObservableSubscription:Subscription = null;
 
   ngOnDestroy() {
     this.viewmodel.screenStatus.pain = null;
+    this.resizeObservableSubscription.unsubscribe();
   }
 
   /**
@@ -100,6 +108,16 @@ export class PreviewComponent implements OnInit, OnDestroy {
    */
   showCriteria(label: Label) {
     this.router.navigate(['pages', 'contents', 'criteria', label.id]);
+  }
+
+  changeFittingMode() {
+    this.fitMode = !this.fitMode;
+    console.log("FitMode", this.fitMode);
+  }
+
+  refresh() {
+    this.fitMode = true;
+    setTimeout(() => this.fitMode = false, 1);
   }
 
   /**

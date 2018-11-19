@@ -10,7 +10,14 @@
     overflow: auto;
   }
 
-  nb-layout-column.infopain-column {
-    flex: 0 0 10rem !important;
+  .infopain-column {
+
+    ::ng-deep input.form-control {
+      padding: 0.2rem 0.3rem !important;
+    }
+
+    ::ng-deep .btn {
+      padding: 0.2rem 0.5rem !important;
+    }
   }
 }

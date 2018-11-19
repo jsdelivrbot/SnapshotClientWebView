@@ -23,6 +23,8 @@ import {
 
 import { NbSecurityModule } from '@nebular/security';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { DragScrollModule } from 'ngx-drag-scroll';
+import { AngularSplitModule } from 'angular-split';
 
 import { DEFAULT_THEME } from './styles/theme.default';
 import { SNAPSHOT_THEME } from './styles/theme.snapshot';
@@ -51,6 +53,8 @@ const NB_MODULES = [
   NbSecurityModule, // *nbIsGranted directive,
   NbProgressBarModule,
   Ng2SmartTableModule,
+  AngularSplitModule,
+  DragScrollModule,
 ];
 
 const COMPONENTS = [

@@ -1,19 +1,39 @@
-<div class="fit-height">
+<div *ngIf="fitMode == false" class="fix-height-100">
+  <drag-scroll class="fix-height-100" style="width:100%">
+    <img [src]="previewUrl">
+  </drag-scroll>
+</div>
+<div *ngIf="fitMode == true" class="fix-height-100">
   <img [src]="previewUrl" class="image-vfit">
 </div>
 
 <ng-template #pain>
   <div class="d-flex flex-column" style="height:100%;">
     <div #contentInfo>
+      <div>
+        <div class="btn-group" style="min-width:100%" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-secondary">Left</button>
+          <button type="button" class="btn btn-secondary" style="width:100%;">Middle</button>
+          <button type="button" class="btn btn-secondary">Right</button>
+        </div>
+      </div>
       <div>{{previewContent?.name}}</div>
       <div>
         表示回数:{{previewContent?.readableCount}}
+        Avg.Time<br>
+        MixTagMode<br>
+
       </div>
     </div>
     <div #categoryTagList>
       <button *ngFor="let label of previewCategoryLabels" class="btn btn-dark btn-xs" (click)="showCriteria(label)">
         {{label.id}} {{label.name}}
       </button>
+    </div>
+    <div>
+      <!--SAMPLE-->
+      <button class="btn btn-xs btn-outline-secondary btn-icon" type="button" (click)="changeFittingMode()">モード変更</button>
+      <button class="btn btn-xs btn-outline-secondary btn-icon" type="button" (click)="refresh()">REF</button>
     </div>
     <div #pagenation class="mt-auto">
       <div class="input-group">
