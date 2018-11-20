@@ -30,5 +30,23 @@ export class PagesComponent {
       link: '/pages/contents/preview',
       home: true,
     },
+    {
+      title: 'カレンダー',
+      icon: 'nb-e-commerce',
+      link: '/pages/contents/calendar',
+      home: true,
+    },
+    {
+      title: 'タイムライン',
+      icon: 'nb-e-commerce',
+      link: '/pages/contents/timeline',
+      home: true,
+    },
+    {
+      title: '整理',
+      icon: 'nb-e-commerce',
+      link: '/pages/contents/annotation',
+      home: true,
+    },
   ];
 }
