@@ -50,11 +50,9 @@ export class PreviewComponent implements OnInit, OnDestroy {
     private router: Router,
     private sanitizer: DomSanitizer,
   ) { }
-
   ngOnInit() {
     this.viewmodel.screenStatus.pain = this.pain;
 
-    // URLからパラメータを取得する
     this.route.paramMap.subscribe((map: ParamMap) => {
       let categoryId: number = +map.get('categoryId');
       let position: number = +map.get('position');
@@ -67,7 +65,11 @@ export class PreviewComponent implements OnInit, OnDestroy {
         this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(content.previewFileUrl);
 
         this.delivery.loadCategory(categoryId).pipe(take(1)).subscribe((category) => {
-          this.previewCategoryLabels = category.labels;
+          if (category.labels != null) { //
+            this.previewCategoryLabels = category.labels;
+          } else {
+            this.previewCategoryLabels = [];
+          }
         });
         this.delivery.loadCategoryContentsTotal(categoryId).pipe(take(1)).subscribe((pagenation) => {
           this.totalPageNo = pagenation.total;
@@ -75,7 +77,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
       });
     });
 
-    this.resizeObservableSubscription = this.resizeObservable.subscribe(()=> this.refresh());
+    this.resizeObservableSubscription = this.resizeObservable.subscribe(() => this.refresh());
   }
   private resizeObservable = fromEvent(window, 'resize').pipe(throttle(() => interval(200)));
   private resizeObservableSubscription:Subscription = null;

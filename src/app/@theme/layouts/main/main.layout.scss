@@ -19,5 +19,43 @@
     ::ng-deep .btn {
       padding: 0.2rem 0.5rem !important;
     }
+
+    ::ng-deep .app-preview  {
+      .ngb-accordion {
+        max-height: 100%;
+        overflow-y: scroll;
+
+        .card-header {
+          padding: 0;
+          .btn {
+            color: nb-theme('color-fg-heading');
+          }
+        }
+
+        .card-body {
+          padding: 0;
+        }
+
+      }
+
+      .nb-list-item {
+        padding: 0;
+
+        .nb-list-item-button {
+          width: 100%;
+          border: none;
+          text-align: left;
+        }
+
+        .nb-list-item-button-last {
+          max-width:4rem;
+
+          border-right: none;
+          border-top: none;
+          border-bottom: none;
+          border-left: 1px solid #dfdfdf;
+        }
+      }
+    }
   }
 }
