@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Category, Content, Label } from '../data';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Category, Content, Label, EventLog } from '../data';
+import { Observable } from 'rxjs';
 import { HttpClientService } from './http-client.service';
-import { HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { PagenationEntity } from '../api';
 
@@ -101,6 +100,31 @@ export class DeliveryService {
    */
   readabled(content_id: number): Observable<boolean> {
     return this.http.action('/api/bff/content/' + content_id + '/readable', null);
+  }
+
+  /**
+   * プレビュー表示イベントログを登録します
+   *
+   * @param contentId
+   */
+  registerPreviewEventLog(contentId: number): Observable<EventLog> {
+    console.log("[DeliveryService]", "プレビュー表示イベントを追加します。");
+    return this.http.create('/api/bff/event' + '?contentId=' + contentId);
+  }
+
+  /**
+   * プレビュー非表示をイベントログに追加します。
+   * @param eventlogId
+   */
+  updatePreviewHideEventLog(eventlogId: number, prevContentId: number | null = null): Observable<any> {
+    console.log("[DeliveryService]", "プレビュー非表示イベントを追加します。");
+
+    let buildPrevContentId = "";
+    if (prevContentId != null) {
+      buildPrevContentId = '?PrevContentId=' + prevContentId;
+    }
+
+    return this.http.update('/api/bff/event/' + eventlogId + buildPrevContentId);
   }
 
   /**

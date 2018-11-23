@@ -21,6 +21,24 @@ export class HttpClientService {
     );
   }
 
+  create(api: string, body: string = null, query: HttpParams = null): Observable<any> {
+    let url = environment.server;
+    return this.http.post<SnapshotApiResponse>(url + api, body, {
+      params: query
+    }).pipe(
+      map(response => response.value)
+    );
+  }
+
+  update(api: string, body: string = null, query: HttpParams = null): Observable<any> {
+    let url = environment.server;
+    return this.http.patch<SnapshotApiResponse>(url + api, body, {
+      params: query
+    }).pipe(
+      map(response => response.value)
+    );
+  }
+
   send(api: string, query: HttpParams = null): Observable<any> {
     let url = environment.server;
     return this.http.get<SnapshotApiResponse>(url + api, {

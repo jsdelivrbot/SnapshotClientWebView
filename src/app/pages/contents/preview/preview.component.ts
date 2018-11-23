@@ -31,6 +31,11 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
   fitMode: boolean = false;
 
+  /** イベントログ */
+  currentEventLogId: number | null = null;
+
+  beforePreviewContentId: number | null = null;
+
   /**
    * テンプレートから「#pain」でマークしているng-templateを取得する
    */
@@ -74,17 +79,35 @@ export class PreviewComponent implements OnInit, OnDestroy {
         this.delivery.loadCategoryContentsTotal(categoryId).pipe(take(1)).subscribe((pagenation) => {
           this.totalPageNo = pagenation.total;
         });
+
+        if (this.currentEventLogId != null) {
+          // プレビュー非表示イベントを、プレビュー表示イベントログに追加する。
+          this.delivery.updatePreviewHideEventLog(this.currentEventLogId).pipe(take(1)).subscribe();
+        }
+
+        // プレビュー表示イベントログ
+        console.log("登録するコンテントID", content.id);
+        this.delivery.registerPreviewEventLog(content.id).pipe(take(1)).subscribe((eventlog) => {
+          this.currentEventLogId = eventlog.id;
+          if (this.beforePreviewContentId != null) {
+            this.delivery.updatePreviewHideEventLog(this.currentEventLogId, this.beforePreviewContentId).pipe(take(1)).subscribe();
+          }
+          this.beforePreviewContentId = content.id;
+        });
       });
     });
 
     this.resizeObservableSubscription = this.resizeObservable.subscribe(() => this.refresh());
   }
   private resizeObservable = fromEvent(window, 'resize').pipe(throttle(() => interval(200)));
-  private resizeObservableSubscription:Subscription = null;
+  private resizeObservableSubscription: Subscription = null;
 
   ngOnDestroy() {
     this.viewmodel.screenStatus.pain = null;
     this.resizeObservableSubscription.unsubscribe();
+
+    // プレビュー非表示イベントを、プレビュー表示イベントログに追加する。
+    this.delivery.updatePreviewHideEventLog(this.currentEventLogId).pipe(take(1)).subscribe();
   }
 
   /**
