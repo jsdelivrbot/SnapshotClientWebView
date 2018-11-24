@@ -3,6 +3,7 @@ import { Category, Content } from 'src/app/@core/data';
 import { DeliveryService } from 'src/app/@core/service/delivery.service';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-finder-explorer',
@@ -26,6 +27,8 @@ export class FinderExplorerComponent implements OnInit {
   /** 選択中のカテゴリID */
   selectedCategoryId: number;
 
+  server: string;
+
   /**
    * コンストラクタ
    *
@@ -35,7 +38,9 @@ export class FinderExplorerComponent implements OnInit {
   constructor(
     private delivery: DeliveryService,
     private router: Router,
-  ) { }
+  ) {
+    this.server = environment.server;
+  }
 
   ngOnInit() {
     this.loadCategoryChildren(1);
@@ -72,7 +77,7 @@ export class FinderExplorerComponent implements OnInit {
         result.forEach((inprop) => {
           let item: ContentListPageItem = {
             content: inprop,
-            thumbnailUrl: inprop.thumbnailImageSrcUrl,
+            thumbnailUrl: this.server + "/api/bff/resource/thumbnail/" + inprop.thumbnailKey,
           };
           this.contentListPageItem.push(item);
         });

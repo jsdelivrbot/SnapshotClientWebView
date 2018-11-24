@@ -6,7 +6,6 @@ export interface Content {
   name: string;
   identifyKey: string;
   contentHash: string;
-  thumbnailImageSrcUrl: string;
   thumbnailKey: string;
   caption: string;
   comment: string;
@@ -16,5 +15,4 @@ export interface Content {
   readableDate: Date;
   starRating: number;
   lastReadDate: Date;
-  previewFileUrl: string;
 }

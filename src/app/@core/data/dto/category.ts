@@ -10,5 +10,4 @@ export interface Category {
   labels: Array<Label>;
   artworkThumbnailKey: string;
   albumFlag: boolean;
-  thumbnailImageSrcUrl: string;
 }

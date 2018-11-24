@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  server: 'http://localhost:5011',
+  //server: 'http://localhost:5011',
+  server: 'http://localhost:8005', // Electron
 };
 
 /*

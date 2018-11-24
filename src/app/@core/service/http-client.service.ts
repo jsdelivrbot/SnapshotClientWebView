@@ -12,7 +12,13 @@ export class HttpClientService {
   ) {
   }
 
-  action(api: string, body: string = null, query: HttpParams = null): Observable<any> {
+  /**
+   *
+   * @param api
+   * @param body 本文に含めるオブジェクト
+   * @param query
+   */
+  action(api: string, body: object = null, query: HttpParams = null): Observable<any> {
     let url = environment.server;
     return this.http.put<SnapshotApiResponse>(url + api, body, {
       params: query
@@ -21,7 +27,13 @@ export class HttpClientService {
     );
   }
 
-  create(api: string, body: string = null, query: HttpParams = null): Observable<any> {
+  /**
+   *
+   * @param api
+   * @param body 本文に含めるオブジェクト
+   * @param query
+   */
+  create(api: string, body: object = null, query: HttpParams = null): Observable<any> {
     let url = environment.server;
     return this.http.post<SnapshotApiResponse>(url + api, body, {
       params: query
@@ -30,7 +42,13 @@ export class HttpClientService {
     );
   }
 
-  update(api: string, body: string = null, query: HttpParams = null): Observable<any> {
+  /**
+   *
+   * @param api
+   * @param body 本文に含めるオブジェクト
+   * @param query
+   */
+  update(api: string, body: object = null, query: HttpParams = null): Observable<any> {
     let url = environment.server;
     return this.http.patch<SnapshotApiResponse>(url + api, body, {
       params: query

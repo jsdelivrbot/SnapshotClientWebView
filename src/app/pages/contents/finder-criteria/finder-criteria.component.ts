@@ -5,6 +5,7 @@ import { take } from 'rxjs/operators';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { String, StringBuilder } from 'typescript-string-operations';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-finder-criteria',
@@ -26,6 +27,8 @@ export class FinderCriteriaComponent implements OnInit, OnDestroy {
 
   routerParamMapSubscription: Subscription;
 
+  server: string;
+
   /**
    *
    * @param delivery
@@ -34,7 +37,9 @@ export class FinderCriteriaComponent implements OnInit, OnDestroy {
     private delivery: DeliveryService,
     private route: ActivatedRoute,
     private router: Router,
-  ) { }
+  ) {
+    this.server = environment.server;
+  }
 
   ngOnInit() {
     this.delivery.loadLabels().pipe(take(1))
@@ -185,7 +190,7 @@ export class FinderCriteriaComponent implements OnInit, OnDestroy {
       for (let category of result) {
         let item: CategoryListPageItem = {
           category: category,
-          thumbnailUrl: category.thumbnailImageSrcUrl
+          thumbnailUrl: this.server + "/api/bff/resource/thumbnail/" + category.artworkThumbnailKey
         };
 
         // アルバム属性のカテゴリでアートワークが未設定の場合は、
@@ -193,7 +198,7 @@ export class FinderCriteriaComponent implements OnInit, OnDestroy {
         if (category.albumFlag && String.IsNullOrWhiteSpace(category.artworkThumbnailKey)) {
           console.log("アルバム属性を持つカテゴリのアートワーク設定をリクエストします")
           this.delivery.updateArtwork(category.id).pipe(take(1)).subscribe(category => {
-            item.thumbnailUrl = category.thumbnailImageSrcUrl;
+            item.thumbnailUrl = this.server + "/api/bff/resource/thumbnail/" + category.artworkThumbnailKey;
             console.log("カテゴリのサムネイルを設定します。", item.thumbnailUrl);
           });
         }
@@ -211,7 +216,7 @@ export class FinderCriteriaComponent implements OnInit, OnDestroy {
         result.forEach((inprop) => {
           let item: ContentListPageItem = {
             content: inprop,
-            thumbnailUrl: inprop.thumbnailImageSrcUrl,
+            thumbnailUrl: this.server + "/api/bff/resource/thumbnail/" + inprop.thumbnailKey
           };
           this.contentListPageItem.push(item);
         });

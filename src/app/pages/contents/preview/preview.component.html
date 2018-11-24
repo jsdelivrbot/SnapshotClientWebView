@@ -9,7 +9,7 @@
 
 <ng-template #pain>
   <div class="d-flex flex-column app-preview" style="height:100%;">
-    <ngb-accordion #acc="ngbAccordion" activeIds="general-info, labellist" class="flex-grow-1 ngb-accordion">
+    <ngb-accordion #acc="ngbAccordion" activeIds="general-info, general-labellist" class="flex-grow-1 ngb-accordion">
       <ngb-panel id="general-info">
         <ng-template ngbPanelTitle>
           Profile <span class="badge badge-pill badge-light">9</span>
@@ -33,7 +33,7 @@
           </div>
         </ng-template>
       </ngb-panel>
-      <ngb-panel id="labellist" title="Simple2">
+      <ngb-panel id="general-labellist" title="ラベル">
         <ng-template ngbPanelContent>
           <div *ngIf="previewCategoryLabels?.length > 0" #categoryTagList>
             <div class="btn-group d-flex flex-wrap" style="min-width:100%" role="group" aria-label="Basic example">
@@ -45,7 +45,7 @@
             <nb-list class="list-group">
               <nb-list-item *ngFor="let label of previewCategoryLabels" class="nb-list-item list-group-item btn-group d-flex justify-content-between">
                 <button class="nb-list-item-button btn btn-xs btn-outline-primary" (click)="showCriteria(label)">
-                  {{label.id}} {{label.name}}
+                  {{label.name}}
                 </button>
               </nb-list-item>
             </nb-list>
@@ -55,7 +55,7 @@
           </div>
         </ng-template>
       </ngb-panel>
-      <ngb-panel title="Simple3">
+      <ngb-panel id="command" title="コマンド">
         <ng-template ngbPanelContent>
           <div>
             <!--SAMPLE-->
@@ -64,7 +64,7 @@
           </div>
         </ng-template>
       </ngb-panel>
-      <ngb-panel title="PropertyForm">
+      <ngb-panel id="content-property" title="コンテントプロパティ">
         <ng-template ngbPanelContent>
           <form>
             <div class="form-group row">
@@ -82,10 +82,13 @@
           </form>
         </ng-template>
       </ngb-panel>
-      <ngb-panel title="Caption">
-        <div>
-          <textarea class="form-control" rows="3"></textarea>
-        </div>
+      <ngb-panel title="キャプション" id="general-caption">
+        <ng-template ngbPanelContent>
+          <div>
+            <textarea class="form-control" rows="3" [ngModel]="previewContent?.caption" (ngModelChange)="previewContent.caption=$event"></textarea>
+            <button type="button" class="btn btn-primary btn-xs" (click)="previewContentSave()">保存</button>
+          </div>
+        </ng-template>
       </ngb-panel>
     </ngb-accordion>
     <div #pagenation class="mt-auto">

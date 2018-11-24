@@ -103,6 +103,16 @@ export class DeliveryService {
   }
 
   /**
+   * コンテント情報を更新します
+   *
+   * @param contentId コンテントID
+   * @param content コンテント情報
+   */
+  updateContent(contentId: number, content: Content): Observable<boolean> {
+    return this.http.update('/api/bff/content/' + contentId, content);
+  }
+
+  /**
    * プレビュー表示イベントログを登録します
    *
    * @param contentId

@@ -16,6 +16,10 @@
       padding: 0.2rem 0.3rem !important;
     }
 
+    ::ng-deep textarea.form-control {
+      padding: 0.2rem 0.3rem !important;
+    }
+
     ::ng-deep .btn {
       padding: 0.2rem 0.5rem !important;
     }

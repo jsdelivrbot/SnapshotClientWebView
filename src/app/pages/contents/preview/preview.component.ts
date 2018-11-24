@@ -6,6 +6,9 @@ import { SafeUrl, DomSanitizer } from '@angular/platform-browser';
 import { ViewModelService } from 'src/app/@core/service/view-model.service';
 import { take, throttle } from 'rxjs/operators';
 import { fromEvent, interval, Subscription } from 'rxjs';
+import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap';
+import { String } from 'typescript-string-operations';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-preview',
@@ -13,6 +16,9 @@ import { fromEvent, interval, Subscription } from 'rxjs';
   styleUrls: ['./preview.component.scss']
 })
 export class PreviewComponent implements OnInit, OnDestroy {
+
+  @ViewChild(NgbAccordion)
+  accordion: NgbAccordion;
 
   /**  */
   previewContent: Content | null = null;
@@ -42,6 +48,8 @@ export class PreviewComponent implements OnInit, OnDestroy {
   @ViewChild('pain')
   pain: TemplateRef<any> = null;
 
+  server:string;
+
   /**
    * コンストラクタ
    *
@@ -53,8 +61,10 @@ export class PreviewComponent implements OnInit, OnDestroy {
     private viewmodel: ViewModelService,
     private route: ActivatedRoute,
     private router: Router,
-    private sanitizer: DomSanitizer,
-  ) { }
+  ) {
+    this.server = environment.server;
+  }
+
   ngOnInit() {
     this.viewmodel.screenStatus.pain = this.pain;
 
@@ -67,7 +77,13 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
       this.delivery.loadCategoryContentsPreview(categoryId, position).pipe(take(1)).subscribe((content) => {
         this.previewContent = content;
-        this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(content.previewFileUrl);
+        this.previewUrl = this.server + "/api/bff/resource/content/" + content.id;
+
+        if (!String.IsNullOrWhiteSpace(this.previewContent.caption)) {
+          this.accordion.expand("general-caption");
+        } else {
+          this.accordion.collapse("general-caption");
+        }
 
         this.delivery.loadCategory(categoryId).pipe(take(1)).subscribe((category) => {
           if (category.labels != null) { //
@@ -116,6 +132,14 @@ export class PreviewComponent implements OnInit, OnDestroy {
   nextItem() {
     if (this.currentPageNo + 1 > this.totalPageNo) return;
     this.navigation(this.currentPageNo + 1);
+  }
+
+  /**
+   *
+   */
+  previewContentSave() {
+    console.debug("コンテント情報の更新", this.previewContent);
+    this.delivery.updateContent(this.previewContent.id, this.previewContent).pipe(take(1)).subscribe();
   }
 
   /**
