@@ -94,12 +94,23 @@ export class DeliveryService {
   }
 
   /**
-   * コンテントを既読状態にします。
+   * コンテントを既読状態を更新します。
    *
    * @param content_id コンテントID
    */
-  readabled(content_id: number): Observable<boolean> {
+  readableContent(content_id: number): Observable<boolean> {
+    console.log("[DeliveryService]", `コンテント(${content_id})の既読状態を更新します。`);
     return this.http.action('/api/bff/content/' + content_id + '/readable', null);
+  }
+
+  /**
+   * カテゴリの既読状態を更新します。
+   *
+   * @param category_id カテゴリ
+   */
+  readableCategory(category_id: number): Observable<boolean> {
+    console.log("[DeliveryService]", `カテゴリ(${category_id})の既読状態を更新します。`);
+    return this.http.action('/api/bff/category/' + category_id + '/readable', null);
   }
 
   /**

@@ -67,7 +67,9 @@ export class FinderExplorerComponent implements OnInit {
    * プレビュー画面を表示します
    */
   showPreview(item: ContentListPageItem, position: number) {
-    this.router.navigate(['pages', 'contents', 'preview', this.selectedCategoryId, position]);
+    this.delivery.readableCategory(this.selectedCategoryId).pipe(take(1)).subscribe(result => {
+      this.router.navigate(['pages', 'contents', 'preview', this.selectedCategoryId, position]);
+    });
   }
 
   private loadContentListByCategory(categoryId: number) {

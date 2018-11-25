@@ -120,7 +120,9 @@ export class FinderCriteriaComponent implements OnInit, OnDestroy {
    * @param position
    */
   showPreview(item: ContentListPageItem, position: number) {
-    this.router.navigate(['pages', 'contents', 'preview', this.selectedCategoryId, position]);
+    this.delivery.readableCategory(this.selectedCategoryId).pipe(take(1)).subscribe(result => {
+      this.router.navigate(['pages', 'contents', 'preview', this.selectedCategoryId, position]);
+    });
   }
 
   /**
