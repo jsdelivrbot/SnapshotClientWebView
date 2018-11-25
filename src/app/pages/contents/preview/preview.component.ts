@@ -48,7 +48,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
   @ViewChild('pain')
   pain: TemplateRef<any> = null;
 
-  server:string;
+  server: string;
 
   /**
    * コンストラクタ
@@ -110,6 +110,9 @@ export class PreviewComponent implements OnInit, OnDestroy {
           }
           this.beforePreviewContentId = content.id;
         });
+
+        // カテゴリに次回表示位置情報を格納します
+        this.delivery.updateCategoryNextContent(this.currentCategoryId, content.id).pipe(take(1)).subscribe();
       });
     });
 

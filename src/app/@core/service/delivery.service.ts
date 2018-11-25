@@ -156,4 +156,14 @@ export class DeliveryService {
   updateArtwork(category_id: number): Observable<Category> {
     return this.http.action('/api/bff/category/' + category_id + '/thumbnail', null);
   }
+
+  /**
+   * カテゴリ内の次のコンテント表示位置を保存します。
+   *
+   * @param category_id
+   * @param next_content_id
+   */
+  updateCategoryNextContent(category_id: number, next_content_id: number): Observable<Category> {
+    return this.http.action('/api/bff/category/' + category_id + '/nextcontent/' + next_content_id);
+  }
 }

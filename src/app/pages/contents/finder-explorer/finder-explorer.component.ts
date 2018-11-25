@@ -72,6 +72,24 @@ export class FinderExplorerComponent implements OnInit {
     });
   }
 
+  /**
+   * カテゴリの次回コンテント表示設定からプレビュー画面を表示します
+   */
+  showPreviewFromCategory(item: Category) {
+    if (item.nextDisplayContentId != null) {
+      this.delivery.loadCategoryContents(item.id).pipe(take(1))
+        .subscribe((result) => {
+          let position: number = result.findIndex(prop => prop.id == item.nextDisplayContentId);
+          position = position + 1;
+          if (position <= 0) position = 0;
+
+          this.delivery.readableCategory(item.id).pipe(take(1)).subscribe(result => {
+            this.router.navigate(['pages', 'contents', 'preview', item.id, position]);
+          });
+        });
+    }
+  }
+
   private loadContentListByCategory(categoryId: number) {
     this.contentListPageItem = [];
     this.delivery.loadCategoryContents(categoryId).pipe(take(1))

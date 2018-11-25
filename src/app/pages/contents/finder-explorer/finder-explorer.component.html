@@ -9,6 +9,8 @@
           <ng-template #noneSubCategoryTemplate>
             <button class="nb-list-item-button btn btn-xs btn-outline-primary" disabled>{{ item.name }}</button>
           </ng-template>
+          <button *ngIf="item.nextDisplayContentId != null" type="button" class="nb-list-item-button-last btn btn-xs btn-outline-primary"
+            (click)="showPreviewFromCategory(item)">途中</button>
           <button type="button" class="nb-list-item-button-last btn btn-xs btn-outline-primary"
             (click)="selectedListItemDisplayContent(item)">Show</button>
         </nb-list-item>

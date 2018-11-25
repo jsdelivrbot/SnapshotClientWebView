@@ -126,6 +126,24 @@ export class FinderCriteriaComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * カテゴリの次回コンテント表示設定からプレビュー画面を表示します
+   */
+  showPreviewFromCategory(item: CategoryListPageItem) {
+    if (item.category.nextDisplayContentId != null) {
+      this.delivery.loadCategoryContents(item.category.id).pipe(take(1))
+        .subscribe((result) => {
+          let position: number = result.findIndex(prop => prop.id == item.category.nextDisplayContentId);
+          position = position + 1;
+          if (position <= 0) position = 0;
+
+          this.delivery.readableCategory(item.category.id).pipe(take(1)).subscribe(result => {
+            this.router.navigate(['pages', 'contents', 'preview', item.category.id, position]);
+          });
+        });
+    }
+  }
+
+  /**
    * 表示中のラベルリストの絞り込みを行います
    *
    * @param item

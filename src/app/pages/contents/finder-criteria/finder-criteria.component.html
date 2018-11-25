@@ -24,10 +24,13 @@
         <div class="row fix-height-100">
           <div class="col p-0 fix-height-100">
             <div class="d-flex flex-column">
-              <nb-card *ngFor="let article of categoryListPageItem; let i = index">
-                <nb-card-header (click)="selectCategoryListItem(article)">{{article.category.name}}</nb-card-header>
+              <nb-card *ngFor="let item of categoryListPageItem; let i = index">
+                <nb-card-header (click)="selectCategoryListItem(item)">{{item.category.name}}</nb-card-header>
                 <nb-card-body>
-                  <img class="thumbnail" src="{{article.thumbnailUrl}}" [alt]="">
+                  <img class="thumbnail" src="{{item.thumbnailUrl}}" [alt]="">
+                  <div *ngIf="item.category.nextDisplayContentId != null">
+                    <button type="button" class="btn btn-xs btn-primary" (click)="showPreviewFromCategory(item)">途中</button>
+                  </div>
                 </nb-card-body>
               </nb-card>
             </div>
