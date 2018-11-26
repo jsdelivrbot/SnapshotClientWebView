@@ -32,6 +32,25 @@ export class DeliveryService {
   }
 
   /**
+   * カテゴリの子階層カテゴリの総数を取得します。
+   *
+   * @param parentCategoryId 取得する子階層カテゴリ一覧の親カテゴリID
+   */
+  loadCategoryTreeTotal(parentCategoryId: number): Observable<PagenationEntity> {
+    let url = '/api/bff/category/tree/' + parentCategoryId + '/total';
+    return this.http.send(url, null)
+      .pipe(
+        map((res) => {
+          if (this.isPagenation(res)) {
+            return res;
+          } else {
+            throw new Error(url);
+          }
+        })
+      );
+  }
+
+  /**
    * カテゴリに含まれるコンテント一覧を取得します。
    *
    * @param categoryId カテゴリID

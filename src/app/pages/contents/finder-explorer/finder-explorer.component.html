@@ -1,7 +1,7 @@
-<div class="container fit-height">
+<div class="container fix-height-100">
   <div class="row fix-height-50">
-    <div *ngFor="let listItem of explorerSplitedListItems" class="col fix-height-100">
-      <nb-list class="list-group">
+    <div *ngFor="let listItem of explorerSplitedListItems" class="col fix-height-100 d-flex flex-column">
+      <nb-list class="list-group flex-grow-1">
         <nb-list-item *ngFor="let item of listItem.items" class="nb-list-item list-group-item btn-group d-flex justify-content-between">
           <button class="nb-list-item-button btn btn-xs btn-outline-primary" *ngIf="item.hasLinkSubCategoryFlag; else noneSubCategoryTemplate"
             (click)="selectedListItem(item)">{{
@@ -9,12 +9,16 @@
           <ng-template #noneSubCategoryTemplate>
             <button class="nb-list-item-button btn btn-xs btn-outline-primary" disabled>{{ item.name }}</button>
           </ng-template>
-          <button *ngIf="item.nextDisplayContentId != null" type="button" class="nb-list-item-button-last btn btn-xs btn-outline-primary"
+          <button *ngIf="item.nextDisplayContentId != null" type="button" class="nb-list-item-button-past btn btn-xs btn-outline-primary"
             (click)="showPreviewFromCategory(item)">途中</button>
           <button type="button" class="nb-list-item-button-last btn btn-xs btn-outline-primary"
             (click)="selectedListItemDisplayContent(item)">Show</button>
         </nb-list-item>
       </nb-list>
+      <div class="mt-auto">
+          <ngb-pagination (pageChange)="searchCurrent(listItem, $event)" [collectionSize]="listItem.total" [(page)]="listItem.pageNo"
+          [maxSize]="5" [pageSize]="listItem.windowSize" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+      </div>
     </div>
   </div>
   <div class="row fix-height-50">

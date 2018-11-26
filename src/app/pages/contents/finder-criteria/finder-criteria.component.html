@@ -1,15 +1,15 @@
 <div class="container fix-height-100">
   <div class="row fix-height-50">
-    <div *ngFor="let listItem of criteriaSplitedListItems" class="col fix-height-100">
-      <nb-list class="list-group">
-        <nb-list-item>
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="絞り込み" [(ngModel)]="listItem.filterLabelListString">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary btn-xs btn-icon" type="button" (click)="refineLabelList(listItem)">S</button>
-            </div>
+    <div *ngFor="let listItem of criteriaSplitedListItems" class="col fix-height-100 d-flex flex-column">
+      <div class="mt-auto">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="絞り込み" [(ngModel)]="listItem.filterLabelListString">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary btn-xs btn-icon" type="button" (click)="refineLabelList(listItem)">S</button>
           </div>
-        </nb-list-item>
+        </div>
+      </div>
+      <nb-list class="list-group flex-grow-1">
         <nb-list-item *ngFor="let item of listItem.labelItems;let i = index" class="nb-list-item list-group-item btn-group d-flex justify-content-between">
           <button class="nb-list-item-button btn btn-xs btn-outline-primary" [class.active]="item.isActive" (click)="selectedListItem(listItem, item)">
             {{item.label.name}}</button>
@@ -29,7 +29,7 @@
                 <nb-card-body>
                   <img class="thumbnail" src="{{item.thumbnailUrl}}" [alt]="">
                   <div *ngIf="item.category.nextDisplayContentId != null">
-                    <button type="button" class="btn btn-xs btn-primary" (click)="showPreviewFromCategory(item)">途中</button>
+                    <button type="button" class="btn btn-xs btn-primary" (click)="showPreviewFromCategory(item)">D</button>
                   </div>
                 </nb-card-body>
               </nb-card>

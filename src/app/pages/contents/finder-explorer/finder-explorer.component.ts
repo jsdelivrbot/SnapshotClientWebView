@@ -122,15 +122,19 @@ export class FinderExplorerComponent implements OnInit {
           // 新たな要素を末尾に追加する
           let item: ExplorerSplitCategoryListItem = {
             categoryId: categoryId,
-            items: result
+            items: result,
+            pageNo: 1,
           };
+          this.pagination(item);
           targetItems.push(item);
         } else if (index == undefined) {
           // リストの要素をクリアして、新たなリストを作成する
           let item: ExplorerSplitCategoryListItem = {
             categoryId: categoryId,
-            items: result
+            items: result,
+            pageNo: 1,
           };
+          this.pagination(item);
           let newArray = [];
           newArray.push(item);
           targetItems = newArray;
@@ -144,6 +148,18 @@ export class FinderExplorerComponent implements OnInit {
         }
         this.explorerSplitedListItems = targetItems;
       });
+  }
+
+  private pagination(item: ExplorerSplitCategoryListItem) {
+    this.delivery.loadCategoryTreeTotal(item.categoryId).pipe(take(1)).subscribe(result => {
+      let pageNo: number = item.pageNo;
+      item.total = result.total;
+      item.windowSize = result.windowSize;
+      if (pageNo > result.page) {
+        pageNo = result.page;
+      }
+      item.pageNo = pageNo;
+    });
   }
 }
 
@@ -161,6 +177,12 @@ export interface ExplorerSplitCategoryListItem {
    * リストに表示するカテゴリ一覧
    */
   items: Category[];
+
+  pageNo?: number;
+
+  total?: number;
+
+  windowSize?: number;
 }
 
 /**

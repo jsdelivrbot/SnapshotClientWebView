@@ -15,6 +15,17 @@
       text-align: left;
     }
 
+    .nb-list-item-button-past {
+      border-radius: 0;
+
+      max-width:4rem;
+
+      border-right: none;
+      border-top: none;
+      border-bottom: none;
+      border-left: 1px solid #dfdfdf;
+    }
+
     .nb-list-item-button-last {
       max-width:4rem;
 
