@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClientService } from './http-client.service';
 import { map } from 'rxjs/operators';
 import { PagenationEntity } from '../api';
+import Utils from '../utils';
 
 @Injectable()
 export class DeliveryService {
@@ -19,7 +20,10 @@ export class DeliveryService {
    * @param categoryId
    */
   loadCategory(categoryId: number): Observable<Category> {
-    return this.http.send('/api/bff/category/' + categoryId, null);
+    return this.http.send('/api/bff/category/' + categoryId, null)
+      .pipe(
+        map(response => response.value)
+      );
   }
 
   /**
@@ -27,8 +31,19 @@ export class DeliveryService {
    *
    * @param parentCategoryId カテゴリID
    */
-  loadCategoryTree(parentCategoryId: number): Observable<Category[]> {
-    return this.http.send('/api/bff/category/tree/' + parentCategoryId, null);
+  loadCategoryTree(parentCategoryId: number): Observable<[Category[], PagenationEntity]> {
+    return this.http.send('/api/bff/category/tree/' + parentCategoryId, null)
+      .pipe(
+        map(response => {
+          // TODO:
+          var page: PagenationEntity = {
+            total: 100,
+            windowSize: 5,
+            page: 1
+          };
+          return Utils.zip(response.Value, page);
+        })
+      );
   }
 
   /**
@@ -39,6 +54,9 @@ export class DeliveryService {
   loadCategoryTreeTotal(parentCategoryId: number): Observable<PagenationEntity> {
     let url = '/api/bff/category/tree/' + parentCategoryId + '/total';
     return this.http.send(url, null)
+      .pipe(
+        map(response => response.value)
+      )
       .pipe(
         map((res) => {
           if (this.isPagenation(res)) {
@@ -56,7 +74,10 @@ export class DeliveryService {
    * @param categoryId カテゴリID
    */
   loadCategoryContents(categoryId: number): Observable<Content[]> {
-    return this.http.send('/api/bff/category/' + categoryId + '/contents', null);
+    return this.http.send('/api/bff/category/' + categoryId + '/contents', null)
+      .pipe(
+        map(response => response.value)
+      );
   }
 
   /**
@@ -67,6 +88,9 @@ export class DeliveryService {
   loadCategoryContentsTotal(categoryId: number): Observable<PagenationEntity> {
     let url = '/api/bff/category/' + categoryId + '/contents/total';
     return this.http.send(url, null)
+      .pipe(
+        map(response => response.value)
+      )
       .pipe(
         map((res) => {
           if (this.isPagenation(res)) {
@@ -86,7 +110,10 @@ export class DeliveryService {
    */
   loadCategoryContentsPreview(categoryId: number, position: number): Observable<Content> {
     let url = '/api/bff/category/' + categoryId + '/contents/preview/' + position;
-    return this.http.send(url, null);
+    return this.http.send(url, null)
+      .pipe(
+        map(response => response.value)
+      );
   }
 
   /**
@@ -95,7 +122,10 @@ export class DeliveryService {
    * このAPIはページング対応とするためシグニチャ変更予定です。
    */
   loadLabels(): Observable<Label[]> {
-    return this.http.send('/api/bff/labels', null);
+    return this.http.send('/api/bff/labels', null)
+      .pipe(
+        map(response => response.value)
+      );
   }
 
   /**
@@ -109,7 +139,10 @@ export class DeliveryService {
 
     let url = '/api/bff/categories/' + labelIdList.join(',');
 
-    return this.http.send(url, null);
+    return this.http.send(url, null)
+      .pipe(
+        map(response => response.value)
+      );
   }
 
   /**

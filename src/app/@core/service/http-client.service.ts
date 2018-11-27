@@ -61,9 +61,7 @@ export class HttpClientService {
     let url = environment.server;
     return this.http.get<SnapshotApiResponse>(url + api, {
       params: query
-    }).pipe(
-      map(response => response.value)
-    );
+    });
   }
 }
 
